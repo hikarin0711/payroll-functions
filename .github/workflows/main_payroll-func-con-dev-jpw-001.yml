@@ -64,7 +64,15 @@ jobs:
         run: |
           unzip release.zip
           rm release.zip
-        
+
+      - name: Sanity check (Functions layout)
+        run: |
+          pwd
+          ls -la
+          test -f host.json
+          test -f functions/fn_blob_ingest/function.json
+          test -f functions/fn_blob_ingest/__init__.py          
+          
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
         id: deploy-to-function
