@@ -72,4 +72,4 @@ jobs:
           package: release.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F53B3874BF9D42649C2EE5AA309676B0 }}
         env:
-          SCM_RUN_FROM_PACKAGE: 1
+          SCM_RUN_FROM_PACKAGE: '1'
