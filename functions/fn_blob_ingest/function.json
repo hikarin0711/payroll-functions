@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "myblob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "payroll-inbox/{name}",
+      "connection": "PAYROLL_STORAGE"
+    }
+  ],
+  "scriptFile": "__init__.py"
+}
