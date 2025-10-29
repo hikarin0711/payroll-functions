@@ -66,10 +66,10 @@ jobs:
 
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
-        env:
-          SCM_RUN_FROM_PACKAGE: 1
         with:
           app-name: 'payroll-func-con-dev-jpw-001'
           slot-name: 'Production'
           package: release.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F53B3874BF9D42649C2EE5AA309676B0 }}
+        env:
+          SCM_RUN_FROM_PACKAGE: 1
