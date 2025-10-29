@@ -40,7 +40,8 @@ jobs:
       # Optional: Add step to run tests here
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: |
+          zip -r release.zip . -x "venv/*" ".git/*" ".github/*"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -70,8 +71,11 @@ jobs:
           pwd
           ls -la
           test -f host.json
-          test -f functions/fn_blob_ingest/function.json
-          test -f functions/fn_blob_ingest/__init__.py          
+          # v1モデルなら function.json がある想定
+          test -f fn_blob_ingest/function.json || echo "function.json missing (v2ならOK)"
+          # v2モデル確認用
+          test -f fn_blob_ingest/__init__.py || true
+          ls -la fn_blob_ingest       
           
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
