@@ -54,34 +54,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: python-app
 
-      - name: Unzip artifact for deployment
-        run: |
-          unzip release.zip
-          rm release.zip
+      # 展開しない。中身チェックは一覧のみ
+      - name: Sanity check (zip content)
+        run: unzip -l release.zip
 
-      - name: Sanity check (Functions layout)
-        run: |
-          pwd
-          ls -la
-          test -f host.json
-          # v1モデルなら function.json がある想定
-          test -f fn_blob_ingest/function.json || echo "function.json missing (v2ならOK)"
-          # v2モデル確認用
-          test -f fn_blob_ingest/__init__.py || true
-          ls -la fn_blob_ingest       
-          
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
-        id: deploy-to-function
         with:
           app-name: 'payroll-func-con-dev-jpw-001'
           slot-name: 'Production'
-          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          package: release.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F53B3874BF9D42649C2EE5AA309676B0 }}
