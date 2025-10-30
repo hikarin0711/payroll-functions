@@ -36,13 +36,15 @@ jobs:
           python -m pip install --upgrade pip
           # 旧ビルド物を念のため掃除（混在回避）
           rm -rf cryptography cffi .python_packages
-          # 実行環境に合う manylinux2014 (glibc 2.17系) の wheel を取得
+          # 実行環境に合う manylinux2014 (glibc 2.17系) の wheel を取得（wheel限定）
           pip download -r requirements.txt \
             --platform manylinux2014_x86_64 \
             --implementation cp \
             --python-version 311 \
             --abi cp311 \
+            --only-binary=:all: \
             --dest wheelhouse
+          ls -l wheelhouse
           # ダウンロード済み wheel だけでオフライン同梱
           pip install --no-index --find-links=wheelhouse -r requirements.txt -t .
           # デプロイZIP作成（wheelhouseは除外）
