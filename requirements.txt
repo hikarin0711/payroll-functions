@@ -2,5 +2,6 @@ azure-functions==1.20.0
 azure-identity==1.15.0
 azure-data-tables==12.5.0
 azure-storage-blob==12.19.0
-cryptography==41.0.7
+cryptography==43.0.3
 cffi==1.15.1
+requests>=2.32.0
