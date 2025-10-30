@@ -65,7 +65,7 @@ jobs:
         run: unzip -l release.zip
 
       - name: 'Deploy to Azure Functions'
-        uses: Azure/webapps-deploy@v2
+        uses: Azure/functions-action@v1
         with:
           app-name: 'payroll-func-con-dev-jpw-001'
           slot-name: 'Production'
