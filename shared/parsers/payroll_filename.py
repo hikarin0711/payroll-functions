@@ -8,8 +8,16 @@ _PATTERN = re.compile(
 
 def parse_payroll_filename(name: str):
     """
-    入力: ファイル名 or パス
-    出力: (user_id, year, month, pay_type['salary'|'bonus'])
+    Parse a payroll filename and extracted the user ID, year, month, and pay type.
+    
+    Args:
+        name (str | os.PathLike): Filename or path.
+    
+    Returns:
+        tuple[str, int, int, str]: (user_id, year, month, pay_type), where pay_type is "salary" or "bonus".
+    
+    Raises:
+        ValueError: If the filename format is invalid.
     """
     base = os.path.basename(name)
     m = _PATTERN.match(base)
